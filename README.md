@@ -3,7 +3,7 @@ nbsee
 
 Simple CLI viewer for Jupyter notebooks focused on fast reading and easy copying of code and text outputs from the terminal.
 
-Status: planning/design. See docs/TODO.md for the working task list.
+![nbsee screenshot](docs/screenshot.png)
 
 Goals (MVP)
 - Interactive terminal viewer for `.ipynb`.
@@ -12,10 +12,10 @@ Goals (MVP)
 - Easy copying from the viewer using the keyboard (xclip).
 - Ignore images/HTML-rich outputs for now.
 
-Quick Concept (not implemented yet)
+Usage
 - `nbsee notebook.ipynb` — open an interactive viewer.
 
-Key bindings (proposed)
+Key bindings
 - `j`/`k`: move to next/previous cell
 - Arrow Up/Down: scroll the view line-by-line
 - PageUp/PageDown: page scroll
@@ -28,7 +28,6 @@ Key bindings (proposed)
 - `/`: search (inputs+outputs). Enter to submit, `Esc` cancels
 - `n` / `N`: next/prev match
 - `gg` / `G`: jump to first / last cell
-- `G`/`gg`: jump to last/first cell (optional)
 - `q`: quit
 
 Notes
