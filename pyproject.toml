@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nbsee"
+version = "0.1.0"
+description = "Rich/Textual terminal viewer for Jupyter notebooks focused on copying code and text outputs"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Yoga Yudistira" }]
+keywords = ["jupyter", "notebook", "cli", "tui", "rich", "textual"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Environment :: Console",
+  "Topic :: Utilities",
+]
+dependencies = ["rich>=13.7", "textual>=0.58"]
+
+[project.scripts]
+nbsee = "nbsee.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/AnakTeka/nbsee"
+Repository = "https://github.com/AnakTeka/nbsee"
+Issues = "https://github.com/AnakTeka/nbsee/issues"
+
+
+[dependency-groups]
+test = ["pytest>=9.0.0"]
+lint = ["ruff>=0.8.0"]
+dev = [{ include-group = "test" }, { include-group = "lint" }]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+exclude = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
