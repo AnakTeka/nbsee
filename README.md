@@ -35,9 +35,29 @@ Notes
 - When an output is not available (e.g., no text/plain), copy will show an inline message.
 - Python syntax highlighting is built-in via Rich.
 
-Install (PyPI)
-- `python -m pip install nbsee`
-- Run: `nbsee path/to/notebook.ipynb`
+Install
+
+**uv (recommended)**
+
+[uv](https://docs.astral.sh/uv/) is a fast Python package manager. Install it from [here](https://docs.astral.sh/uv/getting-started/installation/).
+
+```bash
+# Run without installing
+uvx nbsee notebook.ipynb
+
+# Or install permanently
+uv tool install nbsee
+```
+
+**pip**
+```bash
+pip install nbsee
+```
+
+After installing, run:
+```bash
+nbsee notebook.ipynb
+```
 
 Development (uv)
 - Quick run without installing: `uv run -m nbsee path/to/notebook.ipynb`
