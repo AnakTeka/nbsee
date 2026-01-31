@@ -1,16 +1,22 @@
 nbsee
 =====
 
+[![PyPI version](https://img.shields.io/pypi/v/nbsee)](https://pypi.org/project/nbsee/)
+[![Python versions](https://img.shields.io/pypi/pyversions/nbsee)](https://pypi.org/project/nbsee/)
+[![License](https://img.shields.io/pypi/l/nbsee)](https://pypi.org/project/nbsee/)
+
 Simple CLI viewer for Jupyter notebooks focused on fast reading and easy copying of code and text outputs from the terminal.
 
 ![nbsee screenshot](docs/screenshot.png)
 
-Goals (MVP)
-- Interactive terminal viewer for `.ipynb`.
-- Navigate cells with keys; focus input vs output.
-- Code cells: show source and text/plain outputs only.
-- Easy copying from the viewer using the keyboard (xclip).
-- Ignore images/HTML-rich outputs for now.
+Features
+- Interactive terminal viewer for `.ipynb` files
+- Vim-style navigation between cells
+- Toggle focus between code/markdown and outputs
+- Copy code or outputs directly to clipboard
+- Visual selection mode to copy multiple cells
+- Search through inputs and outputs
+- Python syntax highlighting via Rich
 
 Usage
 - `nbsee notebook.ipynb` — open an interactive viewer.
@@ -31,9 +37,8 @@ Key bindings
 - `q`: quit
 
 Notes
-- Copying uses Linux X11 clipboard via `xclip`. Wayland/macOS not targeted in MVP.
-- When an output is not available (e.g., no text/plain), copy will show an inline message.
-- Python syntax highlighting is built-in via Rich.
+- Clipboard support requires `xclip` (Linux/X11)
+- When no text output is available, copy shows an inline message
 
 Install
 
@@ -54,11 +59,6 @@ uv tool install nbsee
 pip install nbsee
 ```
 
-After installing, run:
-```bash
-nbsee notebook.ipynb
-```
-
 Development (uv)
 - Quick run without installing: `uv run -m nbsee path/to/notebook.ipynb`
 - Run tests: `uv run pytest`
@@ -70,9 +70,3 @@ Development (uv)
   - Activate: `source .venv/bin/activate`
   - Install: `uv pip install -e .`
   - Run: `nbsee path/to/notebook.ipynb`
-- Clipboard requirement: `xclip` on Linux/X11 must be installed and available in `PATH`.
-
-
-Docs
-- Design: `docs/DESIGN.md`
-- TODOs & roadmap: `docs/TODO.md`
