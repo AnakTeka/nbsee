@@ -7,7 +7,7 @@ nbsee
 
 Simple CLI viewer for Jupyter notebooks focused on fast reading and easy copying of code and text outputs from the terminal.
 
-![nbsee screenshot](docs/screenshot.png)
+![nbsee screenshot](https://raw.githubusercontent.com/AnakTeka/nbsee/main/docs/screenshot.png)
 
 Features
 - Interactive terminal viewer for `.ipynb` files
