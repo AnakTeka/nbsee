@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nbsee"
-version = "0.1.0"
+version = "0.1.1"
 description = "Rich/Textual terminal viewer for Jupyter notebooks focused on copying code and text outputs"
 readme = "README.md"
 requires-python = ">=3.10"
