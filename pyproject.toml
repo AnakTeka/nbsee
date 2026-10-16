@@ -25,7 +25,7 @@ classifiers = [
 dependencies = ["rich>=15.0", "textual>=8.2"]
 
 [project.scripts]
-nbsee = "nbsee.__main__:main"
+nbsee = "nbsee.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/AnakTeka/nbsee"
