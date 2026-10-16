@@ -8,7 +8,7 @@ nbsee
 Fast terminal reader for Jupyter notebooks: find something, copy it. Works
 locally, over SSH, on Linux (X11/Wayland) and macOS.
 
-![nbsee screenshot](https://raw.githubusercontent.com/AnakTeka/nbsee/main/docs/screenshot.png)
+![nbsee demo: moving through cells, outline, search, copying lines and a range of cells](https://raw.githubusercontent.com/AnakTeka/nbsee/main/docs/demo.gif)
 
 Features
 - Interactive viewer with vim-style navigation; opens 5,000-cell notebooks instantly
@@ -54,6 +54,8 @@ cat notebook.ipynb | nbsee cat - -f json
 `3`, `3:7`, `:5`, `10:`, `-1`, `1,4:6`.
 
 Key bindings (press `?` in the viewer for the full list)
+
+![nbsee viewer with the outline open and search hits highlighted in a training log](https://raw.githubusercontent.com/AnakTeka/nbsee/main/docs/screenshot.png)
 
 | Key | Action |
 |---|---|
