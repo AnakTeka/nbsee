@@ -17,7 +17,7 @@ Features
 - Search inputs and outputs, step through every hit
 - Syntax highlighting, rendered Markdown, colored tracebacks, outline sidebar
 - Placeholders for images and HTML outputs; nothing is ever executed
-- `nbsee cat` / `nbsee ls` for pipes, scripts and LLMs
+- Agent-friendly: `ls` / `cat` turn notebooks into compact, cell-numbered markdown or JSON
 
 Install
 
@@ -52,6 +52,39 @@ cat notebook.ipynb | nbsee cat - -f json
 `cat` formats: `md` (default, good for LLMs), `text` (colored on a terminal),
 `py` (jupytext percent format), `json`. Cell specs are 1-based and inclusive:
 `3`, `3:7`, `:5`, `10:`, `-1`, `1,4:6`.
+
+For agents and LLMs
+
+Raw `.ipynb` is JSON full of base64 images, escaped source and ANSI-colored
+tracebacks: expensive to read and easy to misparse. nbsee gives coding agents
+(Claude Code, Codex, Cursor, …) a cheap, structured way in:
+
+```bash
+nbsee ls nb.ipynb                         # map: cell, type, outputs, summary
+nbsee cat nb.ipynb -c 11 --only output    # just that traceback, as plain text
+nbsee cat nb.ipynb -c 4:8                 # those cells as markdown
+nbsee cat nb.ipynb -f json                # structured, for tools
+```
+
+- **Smaller:** the scikit-learn intro from the *Python Data Science Handbook*
+  is 412 KB as `.ipynb`, 29 KB as `nbsee cat` (14× less), and 6.6 KB as
+  `nbsee ls`. Notebooks with mostly text output shrink less (2–14× in our
+  tests).
+- **Addressable:** markdown output keeps cell numbers
+  (`<!-- cell 3 · code · In[7] -->`), so an agent can cite and re-fetch exact
+  cells.
+- **Clean:** images and HTML become one-line placeholders
+  (`[image/png 640×480]`), ANSI escapes are stripped, progress bars collapse
+  to their final line.
+- **Safe:** read-only; nothing is executed, so it is fine on untrusted
+  notebooks.
+
+Tip: add this to your `AGENTS.md` / `CLAUDE.md`:
+
+```
+To read a Jupyter notebook, run `nbsee ls <file>`, then
+`nbsee cat <file> -c <cells>`, instead of reading the .ipynb directly.
+```
 
 Key bindings (press `?` in the viewer for the full list)
 
