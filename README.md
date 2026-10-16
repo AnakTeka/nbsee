@@ -5,46 +5,23 @@ nbsee
 [![Python versions](https://img.shields.io/pypi/pyversions/nbsee)](https://pypi.org/project/nbsee/)
 [![License](https://img.shields.io/pypi/l/nbsee)](https://pypi.org/project/nbsee/)
 
-Simple CLI viewer for Jupyter notebooks focused on fast reading and easy copying of code and text outputs from the terminal.
+Fast terminal reader for Jupyter notebooks: find something, copy it. Works
+locally, over SSH, on Linux (X11/Wayland) and macOS.
 
 ![nbsee screenshot](https://raw.githubusercontent.com/AnakTeka/nbsee/main/docs/screenshot.png)
 
 Features
-- Interactive terminal viewer for `.ipynb` files
-- Vim-style navigation between cells
-- Toggle focus between code/markdown and outputs
-- Copy code or outputs directly to clipboard
-- Visual selection mode to copy multiple cells
-- Search through inputs and outputs
-- Python syntax highlighting via Rich
-
-Usage
-- `nbsee notebook.ipynb` — open an interactive viewer.
-
-Key bindings
-- `j`/`k`: move to next/previous cell
-- Arrow Up/Down: scroll the view line-by-line
-- PageUp/PageDown: page scroll
-- Ctrl+u / Ctrl+d: half-page scroll up/down
-- `Tab`: toggle focus between input (code/markdown) and output (text/plain)
-- If a cell has no text output, `Tab` does nothing and shows a brief message.
-- `y`: copy the currently focused region to clipboard using `xclip -selection clipboard`
-- `z`: hide/show all outputs (fold outputs)
-- `Shift+V`: start/stop visual selection for inputs; use `j`/`k` to expand/shrink; `y` copies all selected code cells
-- `/`: search (inputs+outputs). Enter to submit, `Esc` cancels
-- `n` / `N`: next/prev match
-- `gg` / `G`: jump to first / last cell
-- `q`: quit
-
-Notes
-- Clipboard support requires `xclip` (Linux/X11)
-- When no text output is available, copy shows an inline message
+- Interactive viewer with vim-style navigation; opens 5,000-cell notebooks instantly
+- Copy a cell's code or output, a few lines, or a range of cells
+- Clipboard over SSH and in tmux (OSC 52), plus `pbcopy` / `wl-copy` / `xclip` locally
+- Search inputs and outputs, step through every hit
+- Syntax highlighting, rendered Markdown, colored tracebacks, outline sidebar
+- Placeholders for images and HTML outputs; nothing is ever executed
+- `nbsee cat` / `nbsee ls` for pipes, scripts and LLMs
 
 Install
 
 **uv (recommended)**
-
-[uv](https://docs.astral.sh/uv/) is a fast Python package manager. Install it from [here](https://docs.astral.sh/uv/getting-started/installation/).
 
 ```bash
 # Run without installing
@@ -59,14 +36,55 @@ uv tool install nbsee
 pip install nbsee
 ```
 
+Usage
+
+```bash
+nbsee notebook.ipynb              # open the viewer
+nbsee view notebook.ipynb --cell 12
+
+nbsee ls notebook.ipynb           # one line per cell
+nbsee cat notebook.ipynb          # whole notebook as markdown
+nbsee cat notebook.ipynb -c 3:7 -f py          # cells 3-7 as a percent-format script
+nbsee cat notebook.ipynb -c -1 --only output   # output of the last cell
+cat notebook.ipynb | nbsee cat - -f json
+```
+
+`cat` formats: `md` (default, good for LLMs), `text` (colored on a terminal),
+`py` (jupytext percent format), `json`. Cell specs are 1-based and inclusive:
+`3`, `3:7`, `:5`, `10:`, `-1`, `1,4:6`.
+
+Key bindings (press `?` in the viewer for the full list)
+
+| Key | Action |
+|---|---|
+| `j` / `k` | next / previous cell |
+| `↓` / `↑`, `Ctrl+d` / `Ctrl+u`, `PgDn` / `PgUp` | scroll line / half page / page |
+| `gg` / `G`, `:N` | first / last cell, go to cell N |
+| `Tab` | switch between input and output |
+| `y` / `Y` | copy current region / whole cell (input + output) |
+| `V` | select a range of cells; `y` copies the code, `Y` everything |
+| `Enter` | line mode: `j`/`k` move, `V` select lines, `y` copy |
+| `/`, `n` / `N` | search, next / previous hit |
+| `z` / `Z` | fold this output / all outputs |
+| `m` | rendered / raw markdown |
+| `o` | outline sidebar |
+| `R` | reload (also automatic when the file changes) |
+| `Esc` | leave mode / clear search |
+| `q` | quit |
+
+Clipboard
+
+nbsee always sends OSC 52, which most modern terminals (kitty, WezTerm,
+iTerm2, Alacritty, foot, Windows Terminal, …) support, including over SSH.
+Locally it also runs `pbcopy` (macOS), `wl-copy` (Wayland) or `xclip`/`xsel`
+(X11). In tmux, enable `set -g set-clipboard on`. Override with
+`NBSEE_CLIPBOARD=osc52|native|auto`.
+
 Development (uv)
-- Quick run without installing: `uv run -m nbsee path/to/notebook.ipynb`
-- Run tests: `uv run pytest`
-- Lint/format check: `uv run ruff check .` and `uv run ruff format --check .`
-- Build distributions: `uv build`
-- Release: push a tag like `v0.1.0` to trigger `.github/workflows/publish.yml` (requires PyPI trusted publishing setup).
-- Install editable and use `nbsee` command:
-  - Create venv: `uv venv`
-  - Activate: `source .venv/bin/activate`
-  - Install: `uv pip install -e .`
-  - Run: `nbsee path/to/notebook.ipynb`
+- Run: `uv run nbsee path/to/notebook.ipynb`
+- Tests: `uv run pytest`
+- Lint/format: `uv run ruff check .` and `uv run ruff format --check .`
+- Benchmark: `uv run python scripts/bench.py`
+- Build: `uv build`
+- Release: push a tag like `v0.2.0` to trigger `.github/workflows/publish.yml`
+  (requires PyPI trusted publishing).
