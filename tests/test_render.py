@@ -113,10 +113,10 @@ def test_cell_without_output_has_no_output_block():
 
 def test_output_lines_follow_the_models_line_numbering():
     cell = code("x", stream("a\n"), stream("b\n"))
-    assert cell.lines(OUT) == ["a", "", "b"]
+    assert cell.lines(OUT) == ["a", "b"]
     rc = render(cell)
     shown = [rc.plain[g.row][LEFT - 1 + 1 : -2].strip() for g in rc.output.lines]
-    assert shown == ["a", "", "b"]
+    assert shown == ["a", "b"]
 
 
 def test_wrapped_line_geometry_maps_columns_to_rows():

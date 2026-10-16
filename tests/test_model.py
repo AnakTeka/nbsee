@@ -29,7 +29,7 @@ def test_basic_fixture():
     assert [c.index for c in nb.cells] == [0, 1, 2, 3, 4]
     assert [c.execution_count for c in nb.cells] == [None, 1, 2, None, 3]
     assert nb.cells[0].headings == ((1, "Title"), (2, "Setup"))
-    assert nb.cells[1].output_text == "3.141592653589793\n"
+    assert nb.cells[1].output_text == "3.141592653589793"
     assert nb.cells[2].output_text == "2"
     assert not nb.cells[4].has_output_text
 
@@ -48,7 +48,7 @@ def test_errors_fixture():
     assert "ValueError: invalid literal" in err.output_text
     assert stderr.outputs[0].stream == "stderr"
     assert not stderr.has_error
-    assert progress.output_text == "100%|##########| 3/3\n"
+    assert progress.output_text == "100%|##########| 3/3"
 
 
 def test_traceback_pieces_are_on_separate_lines():
@@ -173,7 +173,7 @@ def test_stream_and_display_variants():
     ]
     cell = nb_with(code("", outs)).cells[0]
     assert [o.kind for o in cell.outputs] == ["stream", "display", "display", "result"]
-    assert cell.output_text == "ab\n\nxy"
+    assert cell.output_text == "ab\nxy"
     assert cell.outputs[2].placeholder == "[application/json]"
     assert cell.outputs[3].placeholder is None
 

@@ -71,8 +71,8 @@ class Cell:
 
     @cached_property
     def output_text(self) -> str:
-        """Plain text of all outputs that have text, joined by newlines."""
-        return "\n".join(o.plain for o in self.outputs if o.plain)
+        """Plain text of all outputs, one after another, without blank gaps."""
+        return "\n".join(o.plain.removesuffix("\n") for o in self.outputs if o.plain)
 
     @cached_property
     def has_output_text(self) -> bool:

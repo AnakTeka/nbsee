@@ -252,7 +252,8 @@ def _output_text(out: Output, plain: str, cap: int | None) -> tuple[Text, bool]:
     if cap is not None and raw.count("\n") >= cap:
         raw = "\n".join(raw.split("\n", cap)[:cap])
         return _styled(raw, to_plain(raw)), True
-    return _styled(raw, plain), False
+    # Outputs are stacked without blank gaps, as in `Cell.output_text`.
+    return _styled(raw, plain.removesuffix("\n")), False
 
 
 def _output_lines(
